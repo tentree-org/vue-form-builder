@@ -5,6 +5,7 @@
 <script>
 import genFormCode from "../generator/generateFormCode";
 export default {
+  name: "code-run",
   props: ["data", "remote", "value", "insite"],
   data() {
     return {

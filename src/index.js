@@ -3,6 +3,7 @@ import 'normalize.css/normalize.css'
 
 import MakingForm from './components/Container.vue'
 import GenerateForm from './components/GenerateForm.vue'
+import CodeRun from './components/CodeRun';
 
 import enUS from './lang/en-US'
 import zhCN from './lang/zh-CN'
@@ -28,25 +29,8 @@ const loadLang = function (Vue, lang, locale, i18n) {
   }
 }
 
-MakingForm.install = function (Vue, opts = {
-  lang: 'zh-CN',
-  locale: null,
-  i18n: null
-}) {
-  loadLang(Vue, opts.lang, opts.locale, opts.i18n)
-  Vue.component(MakingForm.name, MakingForm)
-}
-
-GenerateForm.install = function (Vue, opts = {
-  lang: 'zh-CN',
-  locale: null,
-  i18n: null
-}) {
-  loadLang(Vue, opts.lang, opts.locale, opts.i18n)
-  Vue.component(GenerateForm.name, GenerateForm)
-}
-
 const components = [
+  CodeRun,
   MakingForm,
   GenerateForm
 ]
@@ -58,6 +42,14 @@ const install = function (Vue, opts = {
 }) {
   loadLang(Vue, opts.lang, opts.locale, opts.i18n)
   components.forEach(component => {
+    component.install = (Vue, opts = {
+      lang: 'zh-CN',
+      locale: null,
+      i18n: null
+    }) => {
+      loadLang(Vue, opts.lang, opts.locale, opts.i18n)
+      Vue.component(GenerateForm.name, GenerateForm)
+    }
     Vue.component(component.name, component)
   })
 }
@@ -68,12 +60,14 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export {
   install,
+  CodeRun,
   MakingForm,
   GenerateForm
 }
 
 export default {
   install,
+  CodeRun,
   MakingForm,
   GenerateForm
 }
