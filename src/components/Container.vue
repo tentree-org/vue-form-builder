@@ -15,10 +15,9 @@
                 :move="handleMove"
               >
                 <li
-                  v-if="basicFields.indexOf(item.type)>=0"
                   class="form-edit-widget-label"
                   :class="{'no-put': item.type == 'divider'}"
-                  v-for="(item, index) in basicComponents"
+                  v-for="(item, index) in allowedBasicComponents"
                   :key="index"
                 >
                   <a>
@@ -43,7 +42,7 @@
                 <li
                   class="form-edit-widget-label"
                   :class="{'no-put': item.type == 'table'}"
-                  v-for="(item, index) in advanceComponents"
+                  v-for="(item, index) in allowedAdvanceComponents"
                   :key="index"
                 >
                   <a>
@@ -65,9 +64,8 @@
                 :move="handleMove"
               >
                 <li
-                  v-if="layoutFields.indexOf(item.type) >=0"
                   class="form-edit-widget-label no-put"
-                  v-for="(item, index) in layoutComponents"
+                  v-for="(item, index) in allowedLayoutComponents"
                   :key="index"
                 >
                   <a>
@@ -86,34 +84,35 @@
             <el-button
               v-if="clearable"
               type="text"
-              size="medium"
+              :size="actionSize"
               icon="el-icon-delete"
               @click="handleClear"
             >{{$t('fm.actions.clear')}}</el-button>
             <el-button
               v-if="preview"
               type="text"
-              size="medium"
+              :size="actionSize"
               icon="el-icon-view"
               @click="handlePreview"
             >{{$t('fm.actions.preview')}}</el-button>
             <el-button
+              v-if="copyCode"
               type="text"
-              size="medium"
+              :size="actionSize"
               icon="el-icon-document"
               @click="handleCopyCode(true)"
             >{{$t('fm.actions.copyCode')}}</el-button>
             <el-button
               v-if="generateJson"
               type="text"
-              size="medium"
+              :size="actionSize"
               icon="el-icon-tickets"
               @click="handleGenerateJson"
             >{{$t('fm.actions.json')}}</el-button>
             <el-button
               v-if="upload"
               type="text"
-              size="medium"
+              :size="actionSize"
               icon="el-icon-upload2"
               @click="handleUpload"
             >{{$t('fm.actions.import')}}</el-button>
@@ -215,7 +214,7 @@
         </cus-dialog>
       </el-container>
     </el-main>
-    <el-footer height="30px" style="font-weight: 600;">
+    <el-footer v-if="!hideFooter" height="30px" style="font-weight: 600;">
       Powered by
       <a
         target="_blank"
@@ -257,6 +256,18 @@ export default {
     GenerateForm
   },
   props: {
+    actionSize: {
+      type: String,
+      default: "medium"
+    },
+    hideFooter: {
+      type: Boolean,
+      default: false
+    },
+    copyCode: {
+      type: Boolean,
+      default: false
+    },
     preview: {
       type: Boolean,
       default: false
@@ -362,6 +373,17 @@ export default {
       codeActiveName: "vue"
     };
   },
+  computed: {
+    allowedBasicComponents() {
+      return this.basicComponents.filter(item => this.basicFields.indexOf(item.type)>=0)
+    },
+    allowedAdvanceComponents() {
+      return this.advanceComponents.filter(item => this.advanceFields.indexOf(item.type)>=0)
+    },
+    allowedLayoutComponents() {
+      return this.layoutComponents.filter(item => this.layoutFields.indexOf(item.type)>=0)
+    },
+  },
   mounted() {
     this._loadComponents();
   },
@@ -432,7 +454,7 @@ export default {
       this.$nextTick(() => {
         const editor = ace.edit("jsoneditor");
         editor.session.setMode("ace/mode/json");
-        
+
         this.jsonCopyValue = JSON.stringify(this.widgetForm);
       });
     },
