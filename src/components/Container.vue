@@ -284,6 +284,18 @@ export default {
       type: Boolean,
       default: false
     },
+    basicComponentsConfig: {
+      type: Array,
+      default: () => basicComponents,
+    },
+    advanceComponentsConfig: {
+      type: Array,
+      default: () => advanceComponents,
+    },
+    layoutComponentsConfig: {
+      type: Array,
+      default: () => layoutComponents,
+    },
     basicFields: {
       type: Array,
       default: () => [
@@ -389,19 +401,19 @@ export default {
   },
   methods: {
     _loadComponents() {
-      this.basicComponents = this.basicComponents.map(item => {
+      this.basicComponents = this.basicComponentsConfig.map(item => {
         return {
           ...item,
           name: this.$t(`fm.components.fields.${item.type}`)
         };
       });
-      this.advanceComponents = this.advanceComponents.map(item => {
+      this.advanceComponents = this.advanceComponentsConfig.map(item => {
         return {
           ...item,
           name: this.$t(`fm.components.fields.${item.type}`)
         };
       });
-      this.layoutComponents = this.layoutComponents.map(item => {
+      this.layoutComponents = this.layoutComponentsConfig.map(item => {
         return {
           ...item,
           name: this.$t(`fm.components.fields.${item.type}`)
