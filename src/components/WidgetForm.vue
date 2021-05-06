@@ -127,12 +127,16 @@ export default {
 
       //为拖拽到容器的元素添加唯一 key
       const key = genUniqKey();
-      this.$set(this.data.list, newIndex, {
-        ...this.data.list[newIndex],
-        options: {
+      const options = this.data.list[newIndex].options.remoteFunc === undefined
+        ? {
+          ...this.data.list[newIndex].options,
+        }: {
           ...this.data.list[newIndex].options,
           remoteFunc: "func_" + key
-        },
+        }
+      this.$set(this.data.list, newIndex, {
+        ...this.data.list[newIndex],
+        options,
         key,
         // 绑定键值
         model: this.data.list[newIndex].type + "_" + key,

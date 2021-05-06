@@ -103,7 +103,7 @@
         :label="$t('fm.config.widget.option')"
         v-if="Object.keys(data.options).indexOf('options')>=0"
       >
-        <el-radio-group v-model="data.options.remote" size="mini" style="margin-bottom:10px;">
+        <el-radio-group v-if="Object.keys(data.options).indexOf('remoteFunc')>=0" v-model="data.options.remote" size="mini" style="margin-bottom:10px;">
           <el-radio-button :label="false">{{$t('fm.config.widget.staticData')}}</el-radio-button>
           <el-radio-button :label="true">{{$t('fm.config.widget.remoteData')}}</el-radio-button>
         </el-radio-group>
