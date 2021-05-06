@@ -535,7 +535,7 @@ export default {
           required: true,
           message: errMsg
             ? errMsg
-            : `${this.data.name}${this.$t(
+            : `${this.data.name} ${this.$t(
                 "fm.config.widget.validatorRequired"
               )}`
         };
@@ -598,7 +598,10 @@ export default {
     },
     "data.name": function(val) {
       if (this.data.options) {
-        this.validateRequired(this.data.options.required);
+        const defaultRequired = (this.data.rules || []).filter(e => Object.keys(e).indexOf('required') >= 0)[0];
+        const requiredMsg = defaultRequired ? defaultRequired.message : undefined;
+
+        this.validateRequired(this.data.options.required, requiredMsg);
         this.validateDataType(this.data.options.dataType);
         this.valiatePattern(this.data.options.pattern);
       }

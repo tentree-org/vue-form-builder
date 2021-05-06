@@ -65,7 +65,7 @@ export default {
     return {
       required: {
         required: false,
-        errorMsg: ""
+        errorMsg: "",
       },
       dataType: {
         required: false,
@@ -79,15 +79,30 @@ export default {
   },
   mounted() {
     const dataType = this.data.options.dataType;
-    this.data.options.dataType =
-      dataType === "string" ? "" : dataType;
-    this.$emit("validateDataType", this.data.options.dataType);
+    if (dataType) {
+      this.data.options.dataType = dataType === "string" ? "" : dataType;
+      this.$emit("validateDataType", this.data.options.dataType);
+    }
   },
-  methods: {},
+  methods: {
+    changeRequire() {
+      const defaultRequired = (this.data.rules || []).filter(e => Object.keys(e).indexOf('required') >= 0)[0];
+      const errorMsg = defaultRequired ? defaultRequired.message : undefined;
+      const required = !!(this.data.options ? this.data.options.required : false);
+      this.required = {
+        required,
+        errorMsg: errorMsg ? errorMsg : `${this.data.name} ${this.$t("fm.config.widget.validatorRequired")}`
+      };
+      this.$emit("validateRequired", this.required.required, this.required.errorMsg);
+    },
+  },
+  created() {
+    this.changeRequire();
+  },
   watch: {
     "required.required": function(val) {
       this.data.options.required = val;
-      this.$emit("validateRequired", val);
+      this.$emit("validateRequired", val, this.required.errorMsg);
     },
     "dataType.required": function(val) {
       this.data.options.dataType = val ? this.data.options.dataType : "";
@@ -105,6 +120,12 @@ export default {
     },
     "pattern.errorMsg": function(errMsg) {
       this.$emit("valiatePattern", this.data.options.pattern, errMsg);
+    },
+    "data.model": function() {
+      this.changeRequire();
+    },
+    "data.name": function() {
+      this.changeRequire();
     },
     "data.options.dataType": function() {
       this.dataType.errorMsg = "";
