@@ -19,14 +19,11 @@
         size="mini"
         style="padding-left: 10px;"
       >
-        <el-option value="string" :label="$t('fm.config.widget.string')"></el-option>
-        <el-option value="number" :label="$t('fm.config.widget.number')"></el-option>
-        <el-option value="boolean" :label="$t('fm.config.widget.boolean')"></el-option>
-        <el-option value="integer" :label="$t('fm.config.widget.integer')"></el-option>
-        <el-option value="float" :label="$t('fm.config.widget.float')"></el-option>
-        <el-option value="url" :label="$t('fm.config.widget.url')"></el-option>
-        <el-option value="email" :label="$t('fm.config.widget.email')"></el-option>
-        <el-option value="hex" :label="$t('fm.config.widget.hex')"></el-option>
+        <el-option
+          v-for="option in dataTypesOptions"
+          :key="option"
+          :value="option"
+          :label="label(option)" />
       </el-select>
       <el-input
         size="mini"
@@ -74,8 +71,14 @@ export default {
       pattern: {
         required: false,
         errorMsg: ""
-      }
+      },
+      dataTypes: ['string', 'number', 'boolean', 'integer', 'float', 'url', 'email', 'hex'],
     };
+  },
+  computed: {
+    dataTypesOptions() {
+      return this.data.options.dataTypes || this.dataTypes;
+    },
   },
   mounted() {
     const dataType = this.data.options.dataType;
@@ -85,9 +88,14 @@ export default {
     }
   },
   methods: {
+    label(option) {
+      const key = `fm.config.widget.${option}`;
+      const m = this.$t(key);
+      return m === key ? option : m;
+    },
     changeRequire() {
-      const defaultRequired = (this.data.rules || []).filter(e => Object.keys(e).indexOf('required') >= 0)[0];
-      const errorMsg = defaultRequired ? defaultRequired.message : undefined;
+      const defaultRule = (this.data.rules || []).filter(e => Object.keys(e).indexOf('required') >= 0)[0];
+      const errorMsg = defaultRule ? defaultRule.message : undefined;
       const required = !!(this.data.options ? this.data.options.required : false);
       this.required = {
         required,
@@ -95,18 +103,29 @@ export default {
       };
       this.$emit("validateRequired", this.required.required, this.required.errorMsg);
     },
+    changeDataType() {
+      const defaultRule = (this.data.rules || []).filter(e => Object.keys(e).indexOf('type') >= 0)[0];
+      const errorMsg = defaultRule ? defaultRule.message : undefined;
+      const required = !!(this.data.options ? this.data.options.dataType : false);
+      this.dataType = {
+        required,
+        errorMsg: errorMsg ? errorMsg : `${this.data.name} ${this.$t("fm.config.widget.validatorType")}`
+      };
+      this.$emit("validateDataType", this.dataType.required, this.dataType.errorMsg);
+    },
   },
   created() {
     this.changeRequire();
+    this.changeDataType();
   },
   watch: {
     "required.required": function(val) {
       this.data.options.required = val;
-      this.$emit("validateRequired", val, this.required.errorMsg);
+      this.$emit("validateRequired", this.data.options.required, this.required.errorMsg);
     },
     "dataType.required": function(val) {
       this.data.options.dataType = val ? this.data.options.dataType : "";
-      this.$emit("validateDataType", this.data.options.dataType);
+      this.$emit("validateDataType", this.data.options.dataType, this.dataType.errorMsg);
     },
     "pattern.required": function(val) {
       this.data.options.pattern = val ? this.data.options.pattern : "";
@@ -123,9 +142,11 @@ export default {
     },
     "data.model": function() {
       this.changeRequire();
+      this.changeDataType();
     },
     "data.name": function() {
       this.changeRequire();
+      this.changeDataType();
     },
     "data.options.dataType": function() {
       this.dataType.errorMsg = "";

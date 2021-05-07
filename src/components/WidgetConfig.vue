@@ -558,7 +558,7 @@ export default {
           type: val,
           message: errMsg
             ? errMsg
-            : this.data.name + this.$t("fm.config.widget.validatorType")
+            : `${this.data.name} ${this.$t("fm.config.widget.validatorType")}`
         };
       } else {
         this.validator.type = null;
@@ -600,9 +600,12 @@ export default {
       if (this.data.options) {
         const defaultRequired = (this.data.rules || []).filter(e => Object.keys(e).indexOf('required') >= 0)[0];
         const requiredMsg = defaultRequired ? defaultRequired.message : undefined;
-
         this.validateRequired(this.data.options.required, requiredMsg);
-        this.validateDataType(this.data.options.dataType);
+
+        const defaultType = (this.data.rules || []).filter(e => Object.keys(e).indexOf('type') >= 0)[0];
+        const typeMsg = defaultType ? defaultType.message : undefined;
+        this.validateDataType(this.data.options.dataType, typeMsg);
+
         this.valiatePattern(this.data.options.pattern);
       }
     }
