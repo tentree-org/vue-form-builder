@@ -8,7 +8,7 @@
               <div class="widget-cate">{{$t('fm.components.basic.title')}}</div>
               <draggable
                 tag="ul"
-                :list="basicComponents"
+                :list="allowedBasicComponents"
                 v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
                 @end="handleMoveEnd"
                 @start="handleMoveStart"
@@ -32,7 +32,7 @@
               <div class="widget-cate">{{$t('fm.components.advance.title')}}</div>
               <draggable
                 tag="ul"
-                :list="advanceComponents"
+                :list="allowedAdvanceComponents"
                 v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
                 @end="handleMoveEnd"
                 @start="handleMoveStart"
@@ -57,7 +57,7 @@
               <div class="widget-cate">{{$t('fm.components.layout.title')}}</div>
               <draggable
                 tag="ul"
-                :list="layoutComponents"
+                :list="allowedLayoutComponents"
                 v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
                 @end="handleMoveEnd"
                 @start="handleMoveStart"
