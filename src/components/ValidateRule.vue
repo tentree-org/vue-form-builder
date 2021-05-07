@@ -81,11 +81,6 @@ export default {
     },
   },
   mounted() {
-    const dataType = this.data.options.dataType;
-    if (dataType) {
-      this.data.options.dataType = dataType === "string" ? "" : dataType;
-      this.$emit("validateDataType", this.data.options.dataType);
-    }
   },
   methods: {
     label(option) {
