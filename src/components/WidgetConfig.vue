@@ -7,6 +7,45 @@
       <el-form-item :label="$t('fm.config.widget.name')" v-if="data.type!='grid'">
         <el-input v-model="data.name"></el-input>
       </el-form-item>
+
+      <el-form-item
+        :label="$t('fm.config.widget.defaultValue')"
+        v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type == 'textarea' || data.type == 'input' || data.type=='rate' || data.type=='color' || data.type=='switch' || data.type=='number')"
+      >
+        <el-input
+          v-if="data.type=='textarea'"
+          type="textarea"
+          :rows="5"
+          v-model="data.options.defaultValue"
+        ></el-input>
+        <el-input v-if="data.type=='input'" v-model="data.options.defaultValue"></el-input>
+        <el-input
+          type="number"
+          v-if="data.type=='number'"
+          :allow-half="true"
+          v-model="data.options.defaultValue"
+        ></el-input>
+        <el-rate
+          v-if="data.type == 'rate'"
+          style="display:inline-block;vertical-align: middle;"
+          :max="data.options.max"
+          :allow-half="data.options.allowHalf"
+          v-model="data.options.defaultValue"
+        ></el-rate>
+        <el-button
+          type="text"
+          v-if="data.type == 'rate'"
+          style="display:inline-block;vertical-align: middle;margin-left: 10px;"
+          @click="data.options.defaultValue=0"
+        >{{$t('fm.actions.clear')}}</el-button>
+        <el-color-picker
+          v-if="data.type == 'color'"
+          v-model="data.options.defaultValue"
+          :show-alpha="data.options.showAlpha"
+        ></el-color-picker>
+        <el-switch v-if="data.type=='switch'" v-model="data.options.defaultValue"></el-switch>
+      </el-form-item>
+
       <el-form-item
         :label="$t('fm.config.widget.width')"
         v-if="Object.keys(data.options).indexOf('width')>=0"
@@ -220,38 +259,6 @@
             <template slot="prepend">{{$t('fm.config.widget.childrenOption')}}</template>
           </el-input>
         </div>
-      </el-form-item>
-
-      <el-form-item
-        :label="$t('fm.config.widget.defaultValue')"
-        v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type == 'textarea' || data.type == 'input' || data.type=='rate' || data.type=='color' || data.type=='switch')"
-      >
-        <el-input
-          v-if="data.type=='textarea'"
-          type="textarea"
-          :rows="5"
-          v-model="data.options.defaultValue"
-        ></el-input>
-        <el-input v-if="data.type=='input'" v-model="data.options.defaultValue"></el-input>
-        <el-rate
-          v-if="data.type == 'rate'"
-          style="display:inline-block;vertical-align: middle;"
-          :max="data.options.max"
-          :allow-half="data.options.allowHalf"
-          v-model="data.options.defaultValue"
-        ></el-rate>
-        <el-button
-          type="text"
-          v-if="data.type == 'rate'"
-          style="display:inline-block;vertical-align: middle;margin-left: 10px;"
-          @click="data.options.defaultValue=0"
-        >{{$t('fm.actions.clear')}}</el-button>
-        <el-color-picker
-          v-if="data.type == 'color'"
-          v-model="data.options.defaultValue"
-          :show-alpha="data.options.showAlpha"
-        ></el-color-picker>
-        <el-switch v-if="data.type=='switch'" v-model="data.options.defaultValue"></el-switch>
       </el-form-item>
 
       <template v-if="data.type == 'time' || data.type == 'date'">
