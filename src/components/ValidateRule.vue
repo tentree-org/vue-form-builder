@@ -119,8 +119,10 @@ export default {
       this.$emit("validateRequired", this.data.options.required, this.required.errorMsg);
     },
     "dataType.required": function(val) {
-      this.data.options.dataType = val ? this.data.options.dataType : "";
-      this.$emit("validateDataType", this.data.options.dataType, this.dataType.errorMsg);
+      if (this.data.options.dataType !== undefined) {
+        this.data.options.dataType = val ? this.data.options.dataType : "";
+        this.$emit("validateDataType", this.data.options.dataType, this.dataType.errorMsg);
+      }
     },
     "pattern.required": function(val) {
       this.data.options.pattern = val ? this.data.options.pattern : "";
@@ -143,13 +145,17 @@ export default {
       this.changeRequire();
       this.changeDataType();
     },
-    "data.options.dataType": function() {
-      this.dataType.errorMsg = "";
-      this.$emit("validateDataType", this.data.options.dataType);
+    "data.options.dataType": function(val) {
+      if (val === undefined) {
+        this.dataType.errorMsg = ""
+      }
+      this.$emit("validateDataType", this.data.options.dataType, this.dataType.errorMsg);
     },
-    "data.options.pattern": function() {
-      this.pattern.errorMsg = "";
-      this.$emit("valiatePattern", this.data.options.pattern);
+    "data.options.pattern": function(val) {
+      if (val === undefined) {
+        this.pattern.errorMsg = ""
+      }
+      this.$emit("valiatePattern", this.data.options.pattern, this.pattern.errorMsg);
     }
   }
 };
