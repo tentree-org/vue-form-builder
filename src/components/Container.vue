@@ -1,5 +1,5 @@
 <template>
-  <el-container class="fm2-container">
+  <el-container class="fm2-container" :class="{disabled: disabled}">
     <el-main class="fm2-main">
       <el-container>
         <el-aside width="250px">
@@ -8,6 +8,7 @@
               <div class="widget-cate">{{$t('fm.components.basic.title')}}</div>
               <draggable
                 tag="ul"
+                :disabled="disabled"
                 :list="allowedBasicComponents"
                 v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
                 @end="handleMoveEnd"
@@ -32,6 +33,7 @@
               <div class="widget-cate">{{$t('fm.components.advance.title')}}</div>
               <draggable
                 tag="ul"
+                :disabled="disabled"
                 :list="allowedAdvanceComponents"
                 v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
                 @end="handleMoveEnd"
@@ -57,6 +59,7 @@
               <div class="widget-cate">{{$t('fm.components.layout.title')}}</div>
               <draggable
                 tag="ul"
+                :disabled="disabled"
                 :list="allowedLayoutComponents"
                 v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
                 @end="handleMoveEnd"
@@ -281,6 +284,10 @@ export default {
       default: false
     },
     clearable: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
       type: Boolean,
       default: false
     },
@@ -554,5 +561,17 @@ export default {
 <style lang="scss">
 .widget-empty {
   background-position: 50%;
+}
+.fm2-container.disabled {
+  .el-form-item.active {
+    outline: inherit !important;
+    border: inherit !important;
+  }
+  .widget-view-drag {
+    display: none !important;
+  }
+  .widget-view-action {
+    display: none !important;
+  }
 }
 </style>
