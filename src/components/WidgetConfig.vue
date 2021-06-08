@@ -1,6 +1,11 @@
 <template>
   <div v-if="show">
-    <el-form label-position="top">
+    <div v-if="data.error">
+      <div class="alert alert-warning">
+        This element is error or not yet supported.
+      </div>
+    </div>
+    <el-form v-else label-position="top">
       <el-form-item :label="$t('fm.config.widget.model')" v-if="data.type!='grid'">
         <el-input v-model="data.model"></el-input>
       </el-form-item>

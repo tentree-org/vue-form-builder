@@ -144,7 +144,7 @@ $primary-background-color: #ecf5ff;
   right: 0;
   bottom: 0;
 
-  
+
 
   .widget-form-list{
     background: #fff;
@@ -200,7 +200,7 @@ $primary-background-color: #ecf5ff;
           color: #fff;
           margin: 0 5px;
           cursor: pointer;
-          
+
         }
       }
 
@@ -310,7 +310,7 @@ $primary-background-color: #ecf5ff;
               margin-right: 4px;
             }
           }
-    
+
           .widget-view-description{
             height: 15px;
             line-height: 15px;
@@ -318,7 +318,7 @@ $primary-background-color: #ecf5ff;
             margin-top: 6px;
             color:#909399;
           }
-    
+
           .widget-view-action{
             position: absolute;
             right: 0;
@@ -327,16 +327,16 @@ $primary-background-color: #ecf5ff;
             line-height: 28px;
             background: $primary-color;
             z-index: 9;
-    
+
             i{
               font-size: 14px;
               color: #fff;
               margin: 0 5px;
               cursor: pointer;
-              
+
             }
           }
-    
+
           .widget-view-drag{
             position: absolute;
             left: -2px;
@@ -347,7 +347,7 @@ $primary-background-color: #ecf5ff;
             background: $primary-color;
             z-index: 9;
             // display: none;
-    
+
             i{
               font-size: 14px;
               color: #fff;
@@ -355,7 +355,7 @@ $primary-background-color: #ecf5ff;
               cursor: move;
             }
           }
-    
+
           &::after{
             position: absolute;
             left: 0;
@@ -369,30 +369,30 @@ $primary-background-color: #ecf5ff;
           &::before{
             display: none;
           }
-    
+
           &:hover{
             background: $primary-background-color;
             outline: 1px solid $primary-color;
             outline-offset: -1px;
-    
+
             &.active{
               // outline: 1px solid $primary-color;
               border: 1px solid $primary-color;
               outline: 1px solid $primary-color;
               outline-offset: -1px;
             }
-    
+
             .widget-view-drag{
               display: block;
             }
           }
-    
+
           &.active{
             outline: 1px solid $primary-color;
             border: 1px solid $primary-color;
             outline-offset: -1px;
           }
-    
+
           &.ghost{
             background: #F56C6C;
             outline-width: 0;
@@ -435,7 +435,7 @@ $primary-background-color: #ecf5ff;
 
           .widget-table-col{
             height: 100%;
-            
+
             .ghost{
               background: #F56C6C;
               // border: 2px solid #F56C6C;
@@ -448,7 +448,7 @@ $primary-background-color: #ecf5ff;
               font-size: 0;
               overflow: hidden;
               outline: none;
-            
+
               &::after{
                 background: #F56C6C;
                 position: absolute;
@@ -591,12 +591,12 @@ $primary-background-color: #ecf5ff;
     background: #F56C6C;
     border: 2px solid #F56C6C;
     position: relative;
-  
+
     &::after{
       background: #F56C6C;
     }
   }
-  
+
   li.ghost{
     height: 5px;
     list-style: none;
@@ -635,12 +635,12 @@ $primary-background-color: #ecf5ff;
     background: #F56C6C;
     border: 2px solid #F56C6C;
     position: relative;
-  
+
     &::after{
       background: #F56C6C;
     }
   }
-  
+
   li.ghost{
     height: 5px;
     list-style: none;
@@ -690,7 +690,7 @@ $primary-background-color: #ecf5ff;
   .ghost{
     background: #fff;
     border: 1px dashed $primary-color;
-  
+
     &::after{
       background: #fff;
       display: block;
@@ -702,12 +702,12 @@ $primary-background-color: #ecf5ff;
       bottom: 0;
     }
   }
-  
+
   ul{
     margin: 0;
     padding: 0;
   }
-  
+
   li.ghost{
     list-style: none;
     font-size: 0;
@@ -729,4 +729,12 @@ $primary-background-color: #ecf5ff;
   left: 50%;
   margin-left: -150px;
   color: #ccc;
+}
+
+.widget-view-action.top-0 {
+  top: 0;
+}
+
+.el-form-item.el-error {
+  opacity: 0.5;
 }

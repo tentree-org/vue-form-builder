@@ -2,7 +2,7 @@
   <el-form-item
     class="widget-view"
     v-if="element && element.key"
-    :class="{active: selectWidget.key == element.key, 'is_req': element.options.required}"
+    :class="{active: selectWidget.key == element.key, 'is_req': element.options.required, 'el-error': element.error}"
     :label="element.name"
     @click.native.stop="handleSelectWidget(index)"
   >
@@ -204,12 +204,15 @@
     </template>
 
     <div class="widget-view-action" v-if="selectWidget.key == element.key">
-      <i class="iconfont icon-icon_clone" @click.stop="handleWidgetClone(index)"></i>
+      <i class="iconfont icon-icon_clone" v-if="!isErrorElement" @click.stop="handleWidgetClone(index)"></i>
       <i class="iconfont icon-trash" @click.stop="handleWidgetDelete(index)"></i>
     </div>
 
     <div class="widget-view-drag" v-if="selectWidget.key == element.key">
       <i class="iconfont icon-drag drag-widget"></i>
+    </div>
+    <div class="widget-view-action top-0" >
+      <i class="iconfont icon-zidingyishuju" v-if="!isErrorElement"></i>
     </div>
   </el-form-item>
 </template>
@@ -229,6 +232,11 @@ export default {
     };
   },
   mounted() {},
+  computed: {
+    isErrorElement() {
+      return !!this.element.error;
+    },
+  },
   methods: {
     handleSelectWidget(index) {
       this.selectWidget = this.data.list[index];
