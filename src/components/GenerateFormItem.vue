@@ -200,6 +200,16 @@
     <template v-if="widget.type == 'text'">
       <span>{{dataModel}}</span>
     </template>
+
+    <!-- for otherwise widgets, generate by slot-->
+    <template v-if="widget.component">
+      <component
+        :is="widget.component.name"
+        v-bind="widget.component.props"
+        v-on="widget.component.on"
+      >
+      </component>
+    </template>
   </el-form-item>
 </template>
 
