@@ -40,3 +40,5 @@ Modern browsers and Internet Explorer 10+.
 ## Licenses
 
 vue-form-builder is base on [vue-form-making](https://github.com/GavinZhuLei/vue-form-making)
+
+- ## DO NOT DEPEND ON THIS FORK OF THIS REPO! It is deprecated and will be deleted when fully obsolete

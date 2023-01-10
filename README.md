@@ -38,3 +38,5 @@ Modern browsers and Internet Explorer 10+.
 ## 开源协议
 
 `vue-form-builder` 基于 **vue-form-making** 开发，开源协议请参考 [vue-form-making](https://github.com/GavinZhuLei/vue-form-making)
+
+- ## DO NOT DEPEND ON THIS FORK OF THIS REPO! It is deprecated and will be deleted when fully obsolete
